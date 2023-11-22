@@ -2,8 +2,10 @@ package com.cibertec.edu.springbootecommercedaw.controller;
 
 
 import com.cibertec.edu.springbootecommercedaw.model.ProductosApi;
+import com.cibertec.edu.springbootecommercedaw.service.RESTInterfaceProductService;
 import com.cibertec.edu.springbootecommercedaw.service.RESTProductService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +18,43 @@ import java.util.List;
 @RequestMapping("/rest-productos")
 public class ApiController {
 
+    //Propio
+    @Autowired
+    private RESTInterfaceProductService productService2;
 
+
+    //Cibertec
     private RESTProductService productService;
 
 
-    //Metodo Listar
+    //Propio
+    @PostMapping("/nuevo")
+    public ProductosApi newProductosApi(@RequestBody ProductosApi newProductosApi){
+        return this.productService2.newProductosApi(newProductosApi);
+    }
+
+
+    //Propio:
+    @GetMapping("/mostrar")
+    public Iterable<ProductosApi> getAll(){
+        return productService2.getAll();
+    }
+
+    //Propio
+    @PostMapping("/update")
+    public ProductosApi updateProductosApi(@RequestBody ProductosApi productosApi){
+        return this.productService2.modifyProduct(productosApi);
+    }
+
+    //Propio
+    @PostMapping(value = "/{id}")
+    public Boolean deleteProductosApi(@PathVariable(value = "id")Long id){
+        return  this.productService2.deleteProduct(id);
+    }
+
+
+
+    //CIBERTEC:Metodo Listar
     @GetMapping("")
     public ResponseEntity<List<ProductosApi>> listarJuegos() {
         List<ProductosApi> gamesList = new ArrayList<>();
@@ -32,7 +66,7 @@ public class ApiController {
     }
 
 
-    //Metodo Buscar Por Id
+    //CIBERTEC:Metodo Buscar Por Id
    /*
     @GetMapping("{id}")
     public ResponseEntity<ProductosApi>obtenerJuego(@PathVariable("id")Long id){
@@ -44,7 +78,7 @@ public class ApiController {
 
 
 
-    //Metodo Guardar
+    //CIBERTEC:Metodo Guardar
     @PostMapping("")
     public ResponseEntity<ProductosApi> registrarCategoria(
             @RequestBody ProductosApi games
@@ -55,7 +89,7 @@ public class ApiController {
     }
 
 
-    //Metodo Actualizar
+    //CIBERTEC:Metodo Actualizar
     @PutMapping("/{id}")
     public ResponseEntity<ProductosApi> actualizarCategoria(@PathVariable("id") Long id, @RequestBody ProductosApi category) {
         ProductosApi oldCategory = productService.obtenerProductoporId(id);
@@ -71,7 +105,7 @@ public class ApiController {
     }
 
 
-    //Metodo Eliminar
+    //CIBERTEC:Metodo Eliminar
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminarProducto(@PathVariable("id") Long id) {
         productService.eliminar(id);
