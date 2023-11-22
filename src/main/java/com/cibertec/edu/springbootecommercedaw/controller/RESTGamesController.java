@@ -7,9 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +19,11 @@ import java.util.List;
 public class RESTGamesController {
 
 
+    // RECORDAR QUE METODOS CREATE PUT DELETE ESTAN DESHABILITADOS
+
     private RESTGameService restGameService;
 
+    //Metodo Listar
     @GetMapping("")
     public ResponseEntity<List<RESTGames>> listarJuegos() {
         List<RESTGames> gamesList = new ArrayList<>();
@@ -32,6 +33,37 @@ public class RESTGamesController {
         }
         return new ResponseEntity<>(gamesList, HttpStatus.OK);
     }
+
+
+    //Metodo Buscar Por Id
+    @GetMapping("{id}")
+    public ResponseEntity<RESTGames>obtenerJuego(@PathVariable("id")Long id){
+        RESTGames restGames = restGameService.obtenerJuegoPorId(id);
+        return new ResponseEntity<>(restGames, HttpStatus.OK);
+    }
+
+
+
+
+    //Metodo Guardar
+    @PostMapping("")
+    public ResponseEntity<RESTGames> registrarCategoria(
+            @RequestBody RESTGames games
+    ){
+        return new ResponseEntity<>(
+                restGameService.guardar(games), HttpStatus.CREATED
+        );
+    }
+
+
+
+
+
+
+
+
+
+
 
 
 }

@@ -1,6 +1,7 @@
 package com.cibertec.edu.springbootecommercedaw.service;
 
 
+import com.cibertec.edu.springbootecommercedaw.model.Games;
 import com.cibertec.edu.springbootecommercedaw.model.RESTGames;
 import com.cibertec.edu.springbootecommercedaw.repository.GamesRepository;
 import com.cibertec.edu.springbootecommercedaw.repository.RESTGameRepository;
@@ -23,6 +24,11 @@ public class RESTGameService {
     //Metodo guardar/actualizar
     public RESTGames guardar(RESTGames games) {
         return restGameRepository.save(games);
+    }
+
+    //Metodo basico buscar x ID
+    public RESTGames obtenerJuegoPorId(Long id){
+        return restGameRepository.findById(id).get();
     }
 
 
