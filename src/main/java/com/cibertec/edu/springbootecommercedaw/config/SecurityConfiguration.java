@@ -14,7 +14,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
-        // protect endpoint /api/orders
+        // proteger endpoint /api/orders
         http.authorizeHttpRequests(configurer->
                         configurer.requestMatchers("/api/orders/**")
                                 .authenticated()
@@ -22,17 +22,17 @@ public class SecurityConfiguration {
                 .oauth2ResourceServer((oauth2) -> oauth2
                         .jwt(Customizer.withDefaults()));
 
-        // add CORS filters
+        // añadir filtros CORS
         http.cors(Customizer.withDefaults());
 
-        // add content negotiation strategy
+        // añadir estrategia de negociación de contenidos
         http.setSharedObject(ContentNegotiationStrategy.class,
                 new HeaderContentNegotiationStrategy());
 
-        // force a non-empty response body for 401's to make the response more friendly
+        // forzar un cuerpo de respuesta no vacío para 401's para hacer la respuesta más amigable
         Okta.configureResourceServer401ResponseBody(http);
 
-        //disable CSRF since we are not using Cookies for session tracking
+        //desactivar CSRF ya que no estamos utilizando cookies para el seguimiento de la sesión
         http.csrf(csrf -> csrf.disable());
 
         return http.build();

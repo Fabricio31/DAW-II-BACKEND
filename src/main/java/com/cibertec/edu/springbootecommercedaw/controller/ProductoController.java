@@ -93,7 +93,7 @@ public class ProductoController {
 		return ResultadoResponse.builder().mensaje(mensaje).respuesta(respuesta).build();
 	}
 
-	// No funciona xd
+
 	@GetMapping("/listarProductos")
 	@ResponseBody
 	public List<Product> listarProductos() {
