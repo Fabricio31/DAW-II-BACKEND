@@ -19,6 +19,7 @@ public class ProductosApi {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id_product;
 
     @Column(name="name")
